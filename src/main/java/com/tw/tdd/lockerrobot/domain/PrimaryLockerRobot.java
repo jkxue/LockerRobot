@@ -2,6 +2,7 @@ package com.tw.tdd.lockerrobot.domain;
 
 import com.tw.tdd.lockerrobot.enums.LockerTypeEnum;
 import com.tw.tdd.lockerrobot.exceptions.NoAvailableSpaceException;
+import com.tw.tdd.lockerrobot.exceptions.TypeNotMatchException;
 import com.tw.tdd.lockerrobot.exceptions.UnsupportedTypeLockerException;
 
 import java.util.List;
@@ -28,11 +29,15 @@ public class PrimaryLockerRobot {
     }
 
     public Bag getBag(Ticket ticket) {
-        Optional<Locker> targetLocker = lockers.stream().filter(locker -> locker.exist(ticket)).findFirst();
-        if(targetLocker.isPresent()){
-            return targetLocker.get().getBag(ticket);
+        if(ticket.getLockerType() == LockerTypeEnum.M){
+            Optional<Locker> targetLocker = lockers.stream().filter(locker -> locker.exist(ticket)).findFirst();
+            if(targetLocker.isPresent()){
+                return targetLocker.get().getBag(ticket);
+            }else{
+                return null;
+            }
         }else{
-            return null;
+            throw new TypeNotMatchException();
         }
     }
 }
