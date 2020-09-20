@@ -81,4 +81,16 @@ public class SuperLockerRobotTest {
         assertEquals(bagB, actualBag);
     }
 
+    @Test
+    public void should_throw_error_when_get_bag_with_type_not_matched_ticket_given_superLockerRobotA_managed_lockerA_and_lockerB_stored_bagB() throws TypeNotMatchException {
+        Locker lockerA = new Locker(LockerTypeEnum.L, 1);
+        Locker lockerB = new Locker(LockerTypeEnum.L, 1);
+        lockerB.store(new Bag(BagSizeEnum.L));
+        SuperLockerRobot superLockerRobotA = new SuperLockerRobot(Arrays.asList(lockerA, lockerB));
+        Ticket ticketA= new Locker(LockerTypeEnum.M, 1).store(new Bag(BagSizeEnum.M));
+
+        assertThrows(TypeNotMatchException.class, () -> {
+            superLockerRobotA.getBag(ticketA);
+        });
+    }
 }
