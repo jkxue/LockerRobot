@@ -1,13 +1,14 @@
 package com.tw.tdd.lockerrobot;
 
-import com.tw.tdd.lockerrobot.domain.Locker;
-import com.tw.tdd.lockerrobot.domain.SuperLockerRobot;
+import com.tw.tdd.lockerrobot.domain.*;
+import com.tw.tdd.lockerrobot.enums.BagSizeEnum;
 import com.tw.tdd.lockerrobot.enums.LockerTypeEnum;
 import com.tw.tdd.lockerrobot.exceptions.UnsupportedTypeLockerException;
 import org.junit.Test;
 
 import java.util.Arrays;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -18,9 +19,9 @@ public class SuperLockerRobotTest {
         Locker lockerA = new Locker(LockerTypeEnum.L, 1);
         Locker lockerB = new Locker(LockerTypeEnum.L, 1);
 
-        SuperLockerRobot primaryLockerRobot = new SuperLockerRobot(Arrays.asList(lockerA, lockerB));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(lockerA, lockerB));
 
-        assertNotNull(primaryLockerRobot);
+        assertNotNull(superLockerRobot);
     }
 
     @Test
@@ -32,5 +33,20 @@ public class SuperLockerRobotTest {
         assertThrows(UnsupportedTypeLockerException.class, () -> {
             new SuperLockerRobot(Arrays.asList(lockerA, lockerB));
         });
+    }
+
+    @Test
+    public void should_return_ticketC_and_bagC_stored_in_lockerA_when_store_bagC_given_superLockerRobotA_managed_lockerA_and_lockerB_both_capacity_is_2_and_stored_a_bag() {
+        Locker lockerA = new Locker(LockerTypeEnum.L, 2);
+        Locker lockerB = new Locker(LockerTypeEnum.L, 2);
+        lockerA.store(new Bag(BagSizeEnum.L));
+        lockerB.store(new Bag(BagSizeEnum.L));
+        SuperLockerRobot superLockerRobotA = new SuperLockerRobot(Arrays.asList(lockerA, lockerB));
+        Bag bagC = new Bag(BagSizeEnum.L);
+
+        Ticket ticketC = superLockerRobotA.store(bagC);
+
+        assertNotNull(ticketC);
+        assertEquals(bagC, lockerA.getBag(ticketC));
     }
 }
