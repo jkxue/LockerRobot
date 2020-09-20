@@ -15,8 +15,8 @@
    * Then get valid ticketC
    * And bagA is stored in lockerA
    --------------  
-   * Given superLockerRobotA managed lockerA whose capacity is 2 stored bagA
-   * And lockerB whose capacity is 3 stored bagB
+   * Given superLockerRobotA managed lockerA whose capacity is 3 stored 2 bag
+   * And lockerB whose capacity is 2 stored 1 bag
    * When superLockerRobotA stores bagC
    * Then get valid ticketC
    * And bagA is stored in lockerB

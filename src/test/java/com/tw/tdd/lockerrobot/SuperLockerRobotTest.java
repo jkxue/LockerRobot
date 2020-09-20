@@ -49,4 +49,20 @@ public class SuperLockerRobotTest {
         assertNotNull(ticketC);
         assertEquals(bagC, lockerA.getBag(ticketC));
     }
+
+    @Test
+    public void should_return_ticketC_and_bagC_stored_in_lockerB_when_store_bagC_given_superLockerRobotA_managed_lockerA_capacity_is_3_stored_2_bag_and_lockerB_capacity_is_2_stored_1_bag() {
+        Locker lockerA = new Locker(LockerTypeEnum.L, 3);
+        Locker lockerB = new Locker(LockerTypeEnum.L, 2);
+        lockerA.store(new Bag(BagSizeEnum.L));
+        lockerA.store(new Bag(BagSizeEnum.L));
+        lockerB.store(new Bag(BagSizeEnum.L));
+        SuperLockerRobot superLockerRobotA = new SuperLockerRobot(Arrays.asList(lockerA, lockerB));
+        Bag bagC = new Bag(BagSizeEnum.L);
+
+        Ticket ticketC = superLockerRobotA.store(bagC);
+
+        assertNotNull(ticketC);
+        assertEquals(bagC, lockerB.getBag(ticketC));
+    }
 }

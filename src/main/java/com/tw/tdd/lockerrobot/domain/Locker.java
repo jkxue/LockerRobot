@@ -49,4 +49,8 @@ public class Locker {
     public boolean exist(Ticket ticket) {
         return bagTicketMap.containsKey(ticket);
     }
+
+    public double getAvaliableCapacityRate() {
+        return this.getAvailableSpaceNumber()/(double)this.getCapacity();
+    }
 }
