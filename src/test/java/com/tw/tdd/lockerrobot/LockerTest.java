@@ -6,6 +6,7 @@ import com.tw.tdd.lockerrobot.domain.Locker;
 import com.tw.tdd.lockerrobot.domain.Ticket;
 import com.tw.tdd.lockerrobot.enums.BagSizeEnum;
 import com.tw.tdd.lockerrobot.enums.LockerTypeEnum;
+import com.tw.tdd.lockerrobot.exceptions.InvalidTicketException;
 import com.tw.tdd.lockerrobot.exceptions.NoAvailableSpaceException;
 import com.tw.tdd.lockerrobot.exceptions.TypeNotMatchException;
 import org.junit.Test;
@@ -40,7 +41,7 @@ public class LockerTest {
     @ParameterizedTest
     @EnumSource(LockerTypeEnum.class)
     public void should_throw_error_when_store_bagB_given_lockerA_capacity_is_1_and_type_is_S_or_M_or_L_stored_bagA (
-            LockerTypeEnum lockerType ) throws NoAvailableSpaceException {
+            LockerTypeEnum lockerType) throws NoAvailableSpaceException {
 
         Locker lockerA = new Locker(lockerType, 1);
         Bag bagA = new Bag(TYPE_SIZE.get(lockerType));
@@ -80,6 +81,21 @@ public class LockerTest {
 
         assertThrows(TypeNotMatchException.class, () -> {
             lockerB.getBag(ticketA);
+        });
+    }
+
+    @ParameterizedTest
+    @EnumSource(LockerTypeEnum.class)
+    public void should_throw_error_when_get_bagA_with_a_fake_ticketB_given_lockerA_stored_bagA(LockerTypeEnum lockerType)
+            throws InvalidTicketException {
+
+        Locker lockerA = new Locker(lockerType, 1);
+        Bag bagA = new Bag(TYPE_SIZE.get(lockerType));
+        lockerA.store(bagA);
+        Ticket ticketB = new Ticket(lockerType);
+
+        assertThrows(InvalidTicketException.class, () -> {
+            lockerA.getBag(ticketB);
         });
     }
 }

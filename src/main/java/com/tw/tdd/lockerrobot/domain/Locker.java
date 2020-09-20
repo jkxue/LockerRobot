@@ -1,6 +1,7 @@
 package com.tw.tdd.lockerrobot.domain;
 
 import com.tw.tdd.lockerrobot.enums.LockerTypeEnum;
+import com.tw.tdd.lockerrobot.exceptions.InvalidTicketException;
 import com.tw.tdd.lockerrobot.exceptions.NoAvailableSpaceException;
 import com.tw.tdd.lockerrobot.exceptions.TypeNotMatchException;
 import lombok.Getter;
@@ -34,9 +35,13 @@ public class Locker {
     }
 
     public Bag getBag(Ticket ticket) {
-        if(ticket.getLockerType().equals(type)){
-            return bagTicketMap.remove(ticket);
-        }else{
+        if (ticket.getLockerType().equals(type)) {
+            if (bagTicketMap.containsKey(ticket)) {
+                return bagTicketMap.remove(ticket);
+            }else{
+                throw new InvalidTicketException();
+            }
+        } else {
             throw new TypeNotMatchException();
         }
     }
