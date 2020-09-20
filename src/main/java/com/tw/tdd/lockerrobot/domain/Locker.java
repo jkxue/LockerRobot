@@ -31,4 +31,8 @@ public class Locker {
     public Integer getAvailableSpaceNumber() {
         return this.capacity - bagTicketMap.size();
     }
+
+    public Bag getBag(Ticket ticket) {
+        return bagTicketMap.remove(ticket);
+    }
 }

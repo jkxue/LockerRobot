@@ -14,6 +14,7 @@ import org.junit.rules.ExpectedException;
 
 import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -51,4 +52,19 @@ public class LockerTest {
             lockerA.store(bagB);
         });
     }
+
+    @ParameterizedTest
+    @EnumSource(LockerTypeEnum.class)
+    public void should_return_bagA_when_get_bagA_with_ticketA_given_lockerA_capacity_is_1_and_type_is_S_or_M_or_L_stored_bagA (
+            LockerTypeEnum lockerType ) {
+
+        Locker lockerA = new Locker(lockerType, 1);
+        Bag bagA = new Bag(TYPE_SIZE.get(lockerType));
+        Ticket ticketA = lockerA.store(bagA);
+
+        Bag bagFromLocker = lockerA.getBag(ticketA);
+        assertEquals(bagA, bagFromLocker);
+    }
+
+
 }
