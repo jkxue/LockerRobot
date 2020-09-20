@@ -1,12 +1,16 @@
 package com.tw.tdd.lockerrobot;
 
+import com.tw.tdd.lockerrobot.domain.Bag;
 import com.tw.tdd.lockerrobot.domain.Locker;
 import com.tw.tdd.lockerrobot.domain.PrimaryLockerRobot;
+import com.tw.tdd.lockerrobot.domain.Ticket;
+import com.tw.tdd.lockerrobot.enums.BagSizeEnum;
 import com.tw.tdd.lockerrobot.enums.LockerTypeEnum;
 import com.tw.tdd.lockerrobot.exceptions.UnsupportedTypeLockerException;
 import org.junit.Test;
 import java.util.Arrays;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -31,5 +35,18 @@ public class PrimaryLockerRobotTest {
         assertThrows(UnsupportedTypeLockerException.class, () -> {
             new PrimaryLockerRobot(Arrays.asList(lockerA,lockerB));
         });
+    }
+
+    @Test
+    public void should_return_ticketA_and_bagA_stored_correctly_when_store_bagA_given_primaryLockerRobotA_managed_lockerA_and_lockerB_both_lockers_have_available_spaces(){
+        Locker lockerA = new Locker(LockerTypeEnum.M,12);
+        Locker lockerB = new Locker(LockerTypeEnum.M,12);
+
+        PrimaryLockerRobot primaryLockerRobotA = new PrimaryLockerRobot(Arrays.asList(lockerA, lockerB));
+        Bag bagA = new Bag(BagSizeEnum.M);
+        Ticket ticketA = primaryLockerRobotA.store(bagA);
+
+        assertNotNull(ticketA);
+        assertEquals(bagA, lockerA.getBag(ticketA));
     }
 }

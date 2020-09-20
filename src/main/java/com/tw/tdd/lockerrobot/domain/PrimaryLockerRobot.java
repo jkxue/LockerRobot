@@ -14,4 +14,8 @@ public class PrimaryLockerRobot {
         }
         this.lockers = lockers;
     }
+
+    public Ticket store(Bag bagA) {
+        return lockers.get(0).store(bagA);
+    }
 }
