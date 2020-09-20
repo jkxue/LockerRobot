@@ -2,6 +2,7 @@ package com.tw.tdd.lockerrobot.domain;
 
 import com.tw.tdd.lockerrobot.enums.BagSizeEnum;
 import com.tw.tdd.lockerrobot.enums.LockerTypeEnum;
+import com.tw.tdd.lockerrobot.exceptions.InvalidTicketException;
 import com.tw.tdd.lockerrobot.exceptions.NoAvailableSpaceException;
 
 import java.util.List;
@@ -55,6 +56,6 @@ public class LockerRobotManager {
                 return targetSLR.get().getBag(ticket);
             }
         }
-        return null;
+        throw new InvalidTicketException();
     }
 }

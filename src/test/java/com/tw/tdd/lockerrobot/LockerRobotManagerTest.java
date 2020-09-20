@@ -3,6 +3,7 @@ package com.tw.tdd.lockerrobot;
 import com.tw.tdd.lockerrobot.domain.*;
 import com.tw.tdd.lockerrobot.enums.BagSizeEnum;
 import com.tw.tdd.lockerrobot.enums.LockerTypeEnum;
+import com.tw.tdd.lockerrobot.exceptions.InvalidTicketException;
 import com.tw.tdd.lockerrobot.exceptions.NoAvailableSpaceException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -77,6 +78,26 @@ public class LockerRobotManagerTest {
         Bag bagFromLocker = lockerRobotManager.getBag(ticketA);
 
         assertEquals(bagA, bagFromLocker);
+    }
+
+    @ParameterizedTest
+    @EnumSource(LockerTypeEnum.class)
+    public void should_throw_error_when_get_bagA_with_fake_ticketA_given_lockerRobotManagerA_managed_lockerA_primaryLockerRobotA_superLockerRobotA(
+            LockerTypeEnum lockerType) throws NoAvailableSpaceException {
+
+        Locker lockerA = new Locker(LockerTypeEnum.S, 1);
+        PrimaryLockerRobot primaryLockerRobotA = new PrimaryLockerRobot(
+                Arrays.asList(new Locker(LockerTypeEnum.M, 1)));
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(
+                Arrays.asList(new Locker(LockerTypeEnum.L, 1)));
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(
+                Arrays.asList(lockerA),
+                Arrays.asList(primaryLockerRobotA),
+                Arrays.asList(superLockerRobot));
+
+        assertThrows(InvalidTicketException.class, () -> {
+            lockerRobotManager.getBag(new Ticket(lockerType));
+        });
     }
 
 }
