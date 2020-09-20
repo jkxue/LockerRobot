@@ -14,7 +14,7 @@ public class SuperLockerRobot extends LockerRobot{
 
     @Override
     public boolean isTypeMatchedTicket(Ticket ticket) {
-        return false;
+        return ticket.getLockerType() == LockerTypeEnum.L;
     }
 
     @Override

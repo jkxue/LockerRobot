@@ -3,6 +3,8 @@ package com.tw.tdd.lockerrobot;
 import com.tw.tdd.lockerrobot.domain.*;
 import com.tw.tdd.lockerrobot.enums.BagSizeEnum;
 import com.tw.tdd.lockerrobot.enums.LockerTypeEnum;
+import com.tw.tdd.lockerrobot.exceptions.InvalidTicketException;
+import com.tw.tdd.lockerrobot.exceptions.TypeNotMatchException;
 import com.tw.tdd.lockerrobot.exceptions.UnsupportedTypeLockerException;
 import org.junit.Test;
 
@@ -65,4 +67,18 @@ public class SuperLockerRobotTest {
         assertNotNull(ticketC);
         assertEquals(bagC, lockerB.getBag(ticketC));
     }
+
+    @Test
+    public void should_return_bagB_when_get_bagB_with_ticketB_given_superLockerRobotA_manages_lockerA_lockerB_and_lockerB_stored_bagB_with_ticketB() {
+        Locker lockerA = new Locker(LockerTypeEnum.L, 1);
+        Locker lockerB = new Locker(LockerTypeEnum.L, 2);
+        Bag bagB = new Bag(BagSizeEnum.L);
+        Ticket ticketB = lockerB.store(bagB);
+        SuperLockerRobot superLockerRobot = new SuperLockerRobot(Arrays.asList(lockerA, lockerB));
+
+        Bag actualBag = superLockerRobot.getBag(ticketB);
+
+        assertEquals(bagB, actualBag);
+    }
+
 }
