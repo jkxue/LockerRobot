@@ -6,6 +6,7 @@ import com.tw.tdd.lockerrobot.domain.PrimaryLockerRobot;
 import com.tw.tdd.lockerrobot.domain.Ticket;
 import com.tw.tdd.lockerrobot.enums.BagSizeEnum;
 import com.tw.tdd.lockerrobot.enums.LockerTypeEnum;
+import com.tw.tdd.lockerrobot.exceptions.InvalidTicketException;
 import com.tw.tdd.lockerrobot.exceptions.NoAvailableSpaceException;
 import com.tw.tdd.lockerrobot.exceptions.TypeNotMatchException;
 import com.tw.tdd.lockerrobot.exceptions.UnsupportedTypeLockerException;
@@ -103,6 +104,19 @@ public class PrimaryLockerRobotTest {
         Ticket ticketA= new Locker(LockerTypeEnum.L, 1).store(new Bag(BagSizeEnum.L));
 
         assertThrows(TypeNotMatchException.class, () -> {
+            primaryLockerRobotA.getBag(ticketA);
+        });
+    }
+
+    @Test
+    public void should_throw_error_when_get_bag_with_fake_ticket_given_primaryLockerRobotA_managed_lockerA_and_lockerB() throws InvalidTicketException {
+        Locker lockerA = new Locker(LockerTypeEnum.M, 1);
+        Locker lockerB = new Locker(LockerTypeEnum.M, 1);
+        lockerB.store(new Bag(BagSizeEnum.M));
+        PrimaryLockerRobot primaryLockerRobotA = new PrimaryLockerRobot(Arrays.asList(lockerA, lockerB));
+        Ticket ticketA= new Ticket(LockerTypeEnum.M);
+
+        assertThrows(InvalidTicketException.class, () -> {
             primaryLockerRobotA.getBag(ticketA);
         });
     }

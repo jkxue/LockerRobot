@@ -1,6 +1,7 @@
 package com.tw.tdd.lockerrobot.domain;
 
 import com.tw.tdd.lockerrobot.enums.LockerTypeEnum;
+import com.tw.tdd.lockerrobot.exceptions.InvalidTicketException;
 import com.tw.tdd.lockerrobot.exceptions.NoAvailableSpaceException;
 import com.tw.tdd.lockerrobot.exceptions.TypeNotMatchException;
 import com.tw.tdd.lockerrobot.exceptions.UnsupportedTypeLockerException;
@@ -34,7 +35,7 @@ public class PrimaryLockerRobot {
             if(targetLocker.isPresent()){
                 return targetLocker.get().getBag(ticket);
             }else{
-                return null;
+                throw new InvalidTicketException();
             }
         }else{
             throw new TypeNotMatchException();
