@@ -36,7 +36,7 @@ public class Locker {
 
     public Bag getBag(Ticket ticket) {
         if (ticket.getLockerType().equals(type)) {
-            if (bagTicketMap.containsKey(ticket)) {
+            if (exist(ticket)) {
                 return bagTicketMap.remove(ticket);
             }else{
                 throw new InvalidTicketException();
@@ -44,5 +44,9 @@ public class Locker {
         } else {
             throw new TypeNotMatchException();
         }
+    }
+
+    public boolean exist(Ticket ticket) {
+        return bagTicketMap.containsKey(ticket);
     }
 }

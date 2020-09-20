@@ -26,4 +26,13 @@ public class PrimaryLockerRobot {
             throw new NoAvailableSpaceException();
         }
     }
+
+    public Bag getBag(Ticket ticket) {
+        Optional<Locker> targetLocker = lockers.stream().filter(locker -> locker.exist(ticket)).findFirst();
+        if(targetLocker.isPresent()){
+            return targetLocker.get().getBag(ticket);
+        }else{
+            return null;
+        }
+    }
 }

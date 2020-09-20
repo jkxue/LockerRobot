@@ -78,4 +78,17 @@ public class PrimaryLockerRobotTest {
             primaryLockerRobotA.store(bagA);
         });
     }
+
+    @Test
+    public void should_return_bagB_when_get_bagB_with_ticketB_given_primaryLockerRobotA_manages_lockerA_lockerB_and_lockerB_stored_bagB_with_ticketB() {
+        Locker lockerA = new Locker(LockerTypeEnum.M,1);
+        Locker lockerB = new Locker(LockerTypeEnum.M,2);
+        Bag bagB = new Bag(BagSizeEnum.M);
+        Ticket ticketB = lockerB.store(bagB);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(lockerA, lockerB));
+
+        Bag actualBag = primaryLockerRobot.getBag(ticketB);
+
+        assertEquals(bagB, actualBag);
+    }
 }
