@@ -2,12 +2,12 @@
  # Store
 
    * Given lockerRobotManagerA managed lockerA and primaryLockerRobotA and superLockerRobotA
-   * And both have available spaces
+   * And all have available spaces
    * When lockerRobotManagerA stores bagA whose size is one of(S,M,L)
    * Then get valid ticketA
    --------------  
    * Given lockerRobotManagerA managed lockerA and primaryLockerRobotA and superLockerRobotA
-   * And both have one capacity
+   * And all have one capacity
    * And stored bagA whose size is one of(S,M,L)
    * When lockerRobotManagerA store bagB whose size is same with bagA
    * Then get 'No available space' error 
