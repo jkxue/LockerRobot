@@ -49,4 +49,18 @@ public class PrimaryLockerRobotTest {
         assertNotNull(ticketA);
         assertEquals(bagA, lockerA.getBag(ticketA));
     }
+
+    @Test
+    public void should_return_ticketA_and_bagA_stored_correctly_when_store_bagA_given_PrimaryLockerRobot_manage_LockerA_and_LockerB_only_LockerB_has_available_spaces() {
+        Locker lockerA = new Locker(LockerTypeEnum.M,1);
+        Locker lockerB = new Locker(LockerTypeEnum.M,12);
+        lockerA.store(new Bag(BagSizeEnum.M));
+        Bag bagB = new Bag(BagSizeEnum.M);
+
+        PrimaryLockerRobot primaryLockerRobotA = new PrimaryLockerRobot(Arrays.asList(lockerA, lockerB));
+        Ticket ticketB = primaryLockerRobotA.store(bagB);
+
+        assertNotNull(ticketB);
+        assertEquals(bagB, lockerB.getBag(ticketB));
+    }
 }
