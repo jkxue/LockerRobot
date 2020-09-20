@@ -26,7 +26,7 @@
   * Given lockerA whose type is S stored a bagA
   * And lockerB whose type is M stored a bagB
   * When get bag with ticketA from lockerB
-  * Then get 'Invalid ticket' error 
+  * Then get 'Type not match' error 
   
   --------------
   

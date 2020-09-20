@@ -2,6 +2,7 @@ package com.tw.tdd.lockerrobot.domain;
 
 import com.tw.tdd.lockerrobot.enums.LockerTypeEnum;
 import com.tw.tdd.lockerrobot.exceptions.NoAvailableSpaceException;
+import com.tw.tdd.lockerrobot.exceptions.TypeNotMatchException;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class Locker {
         if (this.getAvailableSpaceNumber() == 0) {
             throw new NoAvailableSpaceException();
         } else {
-            Ticket ticket = new Ticket();
+            Ticket ticket = new Ticket(type);
             bagTicketMap.put(ticket, bag);
             return ticket;
         }
@@ -33,6 +34,10 @@ public class Locker {
     }
 
     public Bag getBag(Ticket ticket) {
-        return bagTicketMap.remove(ticket);
+        if(ticket.getLockerType().equals(type)){
+            return bagTicketMap.remove(ticket);
+        }else{
+            throw new TypeNotMatchException();
+        }
     }
 }
