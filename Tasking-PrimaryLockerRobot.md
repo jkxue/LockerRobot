@@ -5,9 +5,9 @@
    * When init primaryLockerRobotA with lockerA and lockerB
    * Then initialization succeeded
    --------------    
-   * Given lockerA and lockerB, both type is M
+   * Given lockerA with type M and lockerB with type is L
    * When init primaryLockerRobotA with lockerA and lockerB
-   * Then initialization failed
+   * Then get 'Unsupported type locker' error
    -------------- 
    * Given primaryLockerRobotA managed lockerA and lockerB, both type is M, both have available spaces
    * When primaryLockerRobotA stores bagA
