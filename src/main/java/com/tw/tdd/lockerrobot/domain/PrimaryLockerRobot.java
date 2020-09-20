@@ -1,6 +1,7 @@
 package com.tw.tdd.lockerrobot.domain;
 
 import com.tw.tdd.lockerrobot.enums.LockerTypeEnum;
+import com.tw.tdd.lockerrobot.exceptions.NoAvailableSpaceException;
 import com.tw.tdd.lockerrobot.exceptions.UnsupportedTypeLockerException;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class PrimaryLockerRobot {
         if(targetLocker.isPresent()){
             return targetLocker.get().store(bag);
         }else{
-            return null;
+            throw new NoAvailableSpaceException();
         }
     }
 }
