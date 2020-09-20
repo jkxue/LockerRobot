@@ -43,6 +43,9 @@ public abstract class LockerRobot {
         }
     }
 
+    public boolean exist(Ticket ticket) {
+        return lockers.stream().filter(locker -> locker.exist(ticket)).findFirst().isPresent();
+    }
     public abstract boolean isTypeMatchedTicket(Ticket ticket);
     public abstract boolean isSupportedLocker(List<Locker> lockers);
     public abstract Optional<Locker> getTargetLocker();
