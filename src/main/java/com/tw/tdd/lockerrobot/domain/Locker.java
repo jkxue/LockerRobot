@@ -1,13 +1,17 @@
 package com.tw.tdd.lockerrobot.domain;
 
 import com.tw.tdd.lockerrobot.enums.LockerTypeEnum;
+import com.tw.tdd.lockerrobot.exceptions.NoAvailableSpaceException;
 import lombok.Getter;
+
+import java.util.HashMap;
 
 @Getter
 public class Locker {
 
     private LockerTypeEnum type;
     private Integer capacity;
+    private HashMap<Ticket, Bag> bagTicketMap = new HashMap<>();
 
     public Locker(LockerTypeEnum type, int capacity) {
         this.type = type;
@@ -15,6 +19,16 @@ public class Locker {
     }
 
     public Ticket store(Bag bag) {
-        return new Ticket();
+        if (this.getAvailableSpaceNumber() == 0) {
+            throw new NoAvailableSpaceException();
+        } else {
+            Ticket ticket = new Ticket();
+            bagTicketMap.put(ticket, bag);
+            return ticket;
+        }
+    }
+
+    public Integer getAvailableSpaceNumber() {
+        return this.capacity - bagTicketMap.size();
     }
 }
